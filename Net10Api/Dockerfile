@@ -12,19 +12,19 @@ EXPOSE 8081
 FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["AsyncStreamApi/AsyncStreamApi.csproj", "AsyncStreamApi/"]
-RUN dotnet restore "./AsyncStreamApi/AsyncStreamApi.csproj"
+COPY ["Net10Api/Net10Api.csproj", "Net10Api/"]
+RUN dotnet restore "./Net10Api/Net10Api.csproj"
 COPY . .
-WORKDIR "/src/AsyncStreamApi"
-RUN dotnet build "./AsyncStreamApi.csproj" -c $BUILD_CONFIGURATION -o /app/build
+WORKDIR "/src/Net10Api"
+RUN dotnet build "./Net10Api.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 # This stage is used to publish the service project to be copied to the final stage
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "./AsyncStreamApi.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "./Net10Api.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
 # This stage is used in production or when running from VS in regular mode (Default when not using the Debug configuration)
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "AsyncStreamApi.dll"]
+ENTRYPOINT ["dotnet", "Net10Api.dll"]

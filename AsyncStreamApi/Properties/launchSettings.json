@@ -1,13 +1,13 @@
 {
   "profiles": {
-    "ZoneWebApp.REST (IIS Express)": {
+    "AsyncStreamApi (IIS Express)": {
       "commandName": "IISExpress",
       "launchBrowser": true,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "ZoneWebApp.REST (KESTREL)": {
+    "AsyncStreamApi (KESTREL)": {
       "commandName": "Project",
       "launchBrowser": true,
       "environmentVariables": {
